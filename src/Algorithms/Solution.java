@@ -1,59 +1,15 @@
 package Algorithms;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
-import DataStructure.ListNode;
+import Algorithms.addTowNumbers.ListNode;
 
 public class Solution {
-	 public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-	        ListNode ans=new ListNode(0);
-	        ListNode head=ans;
-	        int car=0,add1=0,add2=0;
-	        while(l1!=null||l2!=null){
-	            if(l1!=null&&l2!=null){
-	                add1=l1.val;
-	                add2=l2.val;
-	                l1=l1.next;
-	                l2=l2.next;
-	            }
-	            else if(l1!=null&&l2==null){
-	                add1=l1.val;
-	                add2=0;
-	                l1=l1.next;
-	            }
-	            else if(l1==null&&l2!=null){
-	                add1=0;
-	                add2=l2.val;
-	                l2=l2.next;
-	            }
-	            ans.val=(add1+add2+car)%10;
-	            if(add1+add2+car>=10){
-	                car=1;
-	            }
-	            else{
-	                car=0;
-	            }
-	            ans.next=new ListNode(0);
-	            ans=ans.next;
-
-	        }
-	        return head;
-	    }
-	 public int LengthOfLongestSubstring(String s){
-		        if(s.length()==0)
-				    return 0;
-		         HashMap<Character , Integer> visit = new HashMap<Character , Integer>();
-				 int maxlen=0, laststart=0;
-				 for(int i=0;i<s.length();i++){
-					 if(visit.containsKey(s.charAt(i))){
-						laststart=Math.max(laststart, visit.get(s.charAt(i))+1);
-					 }
-					 visit.put(s.charAt(i), i);
-					 maxlen=Math.max(maxlen, i-laststart+1);
-				 }
-				return maxlen;
-	 }
+	
+	List<List<Integer>> ret = new ArrayList<List<Integer>>();  
 	 public double findMedianSortedArrays(int[] nums1, int[] nums2) {
   		  if((nums1.length+nums2.length)%2==1){
 			  return findkth(nums1,nums2,(nums1.length+nums2.length)/2+1);
@@ -239,6 +195,78 @@ public class Solution {
 	        	lastnum=map.get(s.charAt(i));
 	        }
 	        return num;
+	    }
+	    public int longestValidParentheses(String s){
+	    	int length=s.length(),max=0,j=0;
+	    	int[] dp=new int[length];
+	    	for(int i=0;i<length;i++){
+	    		dp[i]=0;
+	    	}
+	    	for(int i=length-2;i>=0;i--){
+	    		if(s.charAt(i)=='('){
+	    			j=i+dp[i+1]+1;
+	    			if(j<length){
+	    				if(s.charAt(j)==')'){
+	    					dp[i]=dp[i+1]+2;
+	    					if(j+1<length){
+	    						dp[i]+=dp[j+1];
+	    					}
+	    				}
+	    			}
+	    			else{
+	    				dp[i]=dp[i+1];
+	    			}
+	    		if(dp[i]>max){
+	    			max=dp[i];
+	    		}
+	    		}
+	    	}
+	    	return max;
+	    }
+	    public List<List<Integer>> threeSum(int[] num) {
+	    	if(num==null||num.length<3) return ret;
+	    	Arrays.sort(num);
+	    	int len=num.length;
+	    	for(int i=0;i<len-2;i++){
+	    		if(i>0&&num[i]==num[i-1]) continue;
+	    		find(num,i+1,len-1,num[i]);
+	    	}
+			return ret; 
+	    }
+	    public void find(int[] num,int begin,int end,int target){
+	    	while(end>begin){
+	    		if(num[begin]+num[end]+target==0){
+	    			List<Integer> ans = new ArrayList<Integer>();
+	    			ans.add(target);
+	    			ans.add(num[begin]);
+	    			ans.add(num[end]);
+	    			ret.add(ans);
+	                while (begin < end && num[begin] == num[begin+1]) begin++;  
+	                while (begin < end && num[end] == num[end-1]) end--;  
+	                begin++;  
+	                end--; 
+	    		}
+	    		else if(num[begin]+num[end]+target<0){
+	    			begin++;
+	    		}else{
+	    			end--;
+	    		}
+	    	}
+	    }
+	    public String longestCommonPrefix(String[] strs){
+	    	if(strs.length==0) return "";
+	    	String prefix=strs[0];
+	    	for(int i=1;i<strs.length;i++){
+	    		while(strs[i].indexOf(prefix)!=0){
+	    			prefix=prefix.substring(0, prefix.length()-1);
+	    		}
+	    		if(prefix.isEmpty()) return "";
+	    	}
+			return prefix;
+	    	
+	    }
+	    public boolean isValid(String s){
+	    	
 	    }
 	    
 	  

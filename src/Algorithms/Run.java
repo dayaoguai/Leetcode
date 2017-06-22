@@ -1,6 +1,6 @@
 package Algorithms;
 
-import DataStructure.ListNode;
+import Algorithms.addTowNumbers.ListNode;
 
 public class Run {
 
@@ -10,7 +10,8 @@ public class Run {
 		String str="DCXXI";
 		int num=-1;
 		Solution so=new Solution();
-		System.out.println(so.romanToInt(str));
+		int[] nums={-1,0,1,2,-1,-4};
+		System.out.println(so.threeSum(nums));
 		
 	}
 

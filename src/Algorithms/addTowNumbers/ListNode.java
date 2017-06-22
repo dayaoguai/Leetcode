@@ -1,4 +1,4 @@
-package DataStructure;
+package Algorithms.addTowNumbers;
 
 public class ListNode {
 	public int val;
